@@ -161,4 +161,5 @@ async def on_message(message):
 async def hello(ctx):
     await ctx.send(f"Hi {ctx.author.mention}!")
 
-bot.run(TOKEN['token'])
+#bot.run(TOKEN['token'])
+bot.run(TOKEN)
