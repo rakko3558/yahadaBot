@@ -16,21 +16,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 # --- 事件處理 ---
 
-try:
-  TOKEN = os.getenv("TOKEN") or ""
-  if TOKEN == "":
-    raise Exception("Please add your token to the Secrets pane.")
-  keep_alive()
-except discord.HTTPException as e:
-    if e.status == 429:
-        print(
-            "The Discord servers denied the connection for making too many requests"
-        )
-        print(
-            "Get help from https://stackoverflow.com/questions/66724687/in-discord-py-how-to-solve-the-error-for-toomanyrequests"
-        )
-    else:
-        raise e
+
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Game(name="cc數字 動作"))
@@ -162,4 +148,20 @@ async def hello(ctx):
     await ctx.send(f"Hi {ctx.author.mention}!")
 
 #bot.run(TOKEN['token'])
-bot.run(TOKEN)
+
+try:
+  TOKEN = os.getenv("TOKEN") or ""
+  if TOKEN == "":
+    raise Exception("Please add your token to the Secrets pane.")
+  keep_alive()
+  bot.run(TOKEN)
+except discord.HTTPException as e:
+    if e.status == 429:
+        print(
+            "The Discord servers denied the connection for making too many requests"
+        )
+        print(
+            "Get help from https://stackoverflow.com/questions/66724687/in-discord-py-how-to-solve-the-error-for-toomanyrequests"
+        )
+    else:
+        raise e
