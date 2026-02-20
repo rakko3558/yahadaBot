@@ -21,7 +21,6 @@ try:
   if TOKEN == "":
     raise Exception("Please add your token to the Secrets pane.")
   keep_alive()
-  bot.run(TOKEN)
 except discord.HTTPException as e:
     if e.status == 429:
         print(
