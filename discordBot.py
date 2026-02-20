@@ -5,7 +5,7 @@ import json
 from discord.ext import commands
 from keep_alive import keep_alive
 import re # 記得在程式最上方加上 import re
-
+from Asakusa import all_sticks
     # 使用正則表達式尋找 數字d數字 (例如 3d100)
 
 # 1. 設定 Intents 與 前綴 (這裡我改成 . 你可以隨意換成喜歡的符號)
@@ -19,7 +19,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Game(name="cc數字 動作"))
+    await bot.change_presence(activity=discord.Game(name="偷吃賊 現行犯 趕老鼠"))
     print(f'機器人已上線：{bot.user}')
 
 
@@ -81,18 +81,16 @@ async def on_message(message):
         raw_content = message.content[2:].strip()
         
         if not raw_content:
-            await message.channel.send("請在「隨機」後面加上選項，用空格隔開喔！")
             return
 
         # 將選項拆開 (預設用空格拆分)
         options = raw_content.split()
 
         if len(options) < 2:
-            await message.channel.send("隨機選取至少需要兩個選項喔！")
             return
             
         if len(options) > 100:
-            await message.channel.send("選項太多了啦（超過100個），機器人會當機的！")
+            await message.channel.send("太多了 不要吵")
             return
 
         # 隨機選出一個
@@ -116,7 +114,7 @@ async def on_message(message):
             await message.channel.send("骰子顆數請在 1~100 之間")
             return
         if die_sides <= 0 or die_sides > 1000:
-            await message.channel.send("骰子面數不合法（請在 1~1000 之間）！")
+            await message.channel.send("骰子面數請在 1~1000 之間")
             return
 
         # 擲骰子
@@ -138,6 +136,29 @@ async def on_message(message):
                 f"1d{die_sides}：**{total}**"
             )
             
+        await message.channel.send(response)
+
+    elif message.content.startswith("問神"):
+        # 抓取祈求事項
+        reason = message.content[2:].strip()
+        if not reason:
+            await message.channel.send("請輸入你想祈求的事項，例如：`問神 今天的面試`")
+            return
+
+        # 隨機抽取一支籤
+        stick = random.choice(all_sticks)
+
+        # 格式化輸出
+        response = (
+            f"{message.author.mention} 針對「{reason}」的求籤結果：\n\n"
+            f"**[{stick['type']}]** {stick['poem']}\n"
+            f"----------------------------------\n"
+            f"{stick['explain']}\n"
+            f"----------------------------------\n"
+            f"{stick['result']}\n\n"
+            f"建議：{stick['note']}"
+        )
+        
         await message.channel.send(response)
     # 必須加上這行，否則其他的 @bot.command (如 hello) 會失效
     await bot.process_commands(message)
