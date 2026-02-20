@@ -1,4 +1,5 @@
 import discord 
+import os
 import random
 import json
 from discord.ext import commands
@@ -9,15 +10,22 @@ import re # 記得在程式最上方加上 import re
 # 1. 設定 Intents 與 前綴 (這裡我改成 . 你可以隨意換成喜歡的符號)
 intents = discord.Intents.all() 
 bot = commands.Bot(command_prefix="!", intents=intents)
-with open('token.json', "r", encoding = "utf8") as file:
-    TOKEN = json.load(file)
+#with open('token.json', "r", encoding = "utf8") as file:
+#    TOKEN = json.load(file)
 
 # --- 事件處理 ---
+
+TOKEN = os.getenv("TOKEN") or ""
+if TOKEN == "":
+    raise Exception("Please add your token to the Secrets pane.")
 
 @bot.event
 async def on_ready():
     await bot.change_presence(activity=discord.Game(name="cc數字 動作"))
     print(f'機器人已上線：{bot.user}')
+
+
+  
 
 @bot.event
 async def on_message(message):
