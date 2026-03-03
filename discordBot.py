@@ -160,6 +160,52 @@ async def on_message(message):
         )
         
         await message.channel.send(response)
+
+    elif message.content.startswith("抽人"):
+        # 檢查是否為標註模式 (檢查開頭是不是 "抽人!")
+        is_mention = message.content.startswith("抽人!")
+        
+        # 取得敘述內容：如果是 "抽人!" 則跳過 3 個字，否則跳過 2 個字
+        offset = 3 if is_mention else 2
+        description = message.content[offset:].strip()
+
+        # 取得該伺服器的所有成員 (排除機器人自己)
+        members = [m for m in message.guild.members if not m.bot]
+
+        if not members:
+            await message.channel.send("沒有人")
+            return
+
+        # 隨機選一位
+        lucky_guy = random.choice(members)
+
+        # 根據模式決定顯示名稱還是標註
+        name_display = lucky_guy.mention if is_mention else lucky_guy.display_name
+        
+        # 組合敘述文字 (如果有填寫敘述才加上空格)
+        desc_display = f" {description}" if description else ""
+
+        response = f"現場抽一位咪醬幸運兒 {name_display}{desc_display}"
+        await message.channel.send(response)
+
+    elif message.content.startswith("八幡水晶球") or message.content.startswith("水晶球"):
+        
+        # 這裡放入你想要的所有回應選項
+        fortunes = [
+            "吵什麼吵",
+            "我也沒辦法",
+            "?",
+            "信賴100%",
+            "...",
+            "超好笑"
+        ]
+        
+        # 隨機挑選一個
+        prediction = random.choice(fortunes)
+        
+        # 回覆訊息
+        await message.channel.send(f"{prediction}")
+    
     # 必須加上這行，否則其他的 @bot.command (如 hello) 會失效
     await bot.process_commands(message)
 
