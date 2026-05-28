@@ -216,7 +216,7 @@ async def on_message(message):
             "問就是要",
             "哪來的狗",
             "急什麼？",
-            "阿牛！我知道你醒著！".
+            "阿牛！我知道你醒著！",
             "-# 此內容可能已被內容擁有者刪除，或者因為你是女同性戀而無法顯示。[瞭解更多](<https://youtu.be/wJidoc_Zmmo?si=EWBkYEqGpoewWRCH>)"
         ]
         
