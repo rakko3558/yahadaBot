@@ -230,14 +230,14 @@ async def on_message(message):
         
         # 回覆訊息
         await message.channel.send(f"{prediction}")
-    
-    # 必須加上這行，否則其他的 @bot.command (如 hello) 會失效
-    await bot.process_commands(message)
-    
+        
     # 檢查訊息是否以 "破水晶球" 或 "爛水晶球" 開頭
     elif message.content.startswith(("破水晶球", "爛水晶球")):
         await message.channel.send(f"{message.author.mention}\n你很失禮")
-    
+        
+    # 必須加上這行，否則其他的 @bot.command (如 hello) 會失效
+    await bot.process_commands(message)
+
 # --- 其他原本的指令 ---
 @bot.command()
 async def hello(ctx):
