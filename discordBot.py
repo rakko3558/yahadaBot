@@ -213,7 +213,16 @@ async def on_message(message):
             "阿牛！我知道你醒著！",
             "-# 此內容可能已被內容擁有者刪除，或者因為你是女同性戀而無法顯示。[瞭解更多](<https://youtu.be/wJidoc_Zmmo?si=EWBkYEqGpoewWRCH>)",
             "一定是羊肉爐搞的鬼",
-            "管好你自己"
+            "管好你自己",
+            "您覺得是怎樣就怎樣",
+            "求我啊",
+            "要叫幾次？",
+            "好吵",
+            "要講幾遍？",
+            "閱",
+            "你可以先動腦嗎？",
+            "喵喵",
+            "我好累"
         ]
         
         # 隨機挑選一個
@@ -224,7 +233,11 @@ async def on_message(message):
     
     # 必須加上這行，否則其他的 @bot.command (如 hello) 會失效
     await bot.process_commands(message)
-
+    
+    # 檢查訊息是否以 "破水晶球" 或 "爛水晶球" 開頭
+    elif message.content.startswith(("破水晶球", "爛水晶球")):
+        await message.channel.send(f"{message.author.mention}\n你很失禮")
+    
 # --- 其他原本的指令 ---
 @bot.command()
 async def hello(ctx):
